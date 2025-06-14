@@ -3,6 +3,8 @@ import Footer from "../components/Footer";
 import ApiForm from "../components/ApiForm";
 import { motion } from "framer-motion";
 import { BookText, Hash, RefreshCw, Thermometer, RotateCcw, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@headlessui/react";
 
 const apiCards = [
 	{
@@ -105,6 +107,17 @@ export default function Home() {
 							<ApiForm />
 						</motion.div>
 					</motion.section>
+
+					<div className="flex flex-col items-center mt-12 mb-8">
+						<span className="mb-2 text-lg font-semibold text-blue-700 dark:text-blue-400">
+							Check out my chatbot
+						</span>
+						<Link href="/chatbot" passHref>
+							<button className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-lg hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+								Go to Chatbot
+							</button>
+						</Link>
+					</div>
 				</div>
 			</main>
 			<Footer />
