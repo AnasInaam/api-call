@@ -8,9 +8,9 @@ const Header: React.FC = () => (
     <div className="flex md:hidden w-10 h-10" />
     <div className="flex items-center gap-3 mx-auto">
       <Sparkles className="w-8 h-8 text-white drop-shadow" />
-      <span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow">FlexAPI Studio</span>
+      <span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow whitespace-nowrap">FlexAPI Studio</span>
     </div>
-    <div className="absolute right-6 top-1/2 -translate-y-1/2">
+    <div className="flex items-center justify-end min-w-[2.5rem] md:min-w-0 ml-2">
       <ThemeToggle />
     </div>
   </header>
