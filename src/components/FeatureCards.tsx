@@ -7,11 +7,11 @@ const features = [
 		icon: (
 			<FlaskConical className="w-7 h-7 text-purple-600 dark:text-purple-400" />
 		),
-		title: "Flask API Playground",
+		title: "Text & Number Utilities",
 		description:
 			"Try out 5 different Flask API endpoints: word count, number addition, string reversal, temperature conversion, and palindrome check.",
 		link: "/flask-api",
-		button: "Try Flask APIs",
+		button: "Try Utilities",
 	},
 	{
 		icon: <Home className="w-7 h-7 text-green-600 dark:text-green-400" />,

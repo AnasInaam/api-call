@@ -3,6 +3,7 @@ import Head from "next/head";
 import Layout from "../components/Layout";
 const ApiForm = dynamic(() => import("../components/ApiForm"), { ssr: false });
 import { BookText, Hash, RefreshCw, Thermometer, RotateCcw, CheckCircle2 } from "lucide-react";
+import Footer from "../components/Footer";
 
 const apiCards = [
 	{
@@ -41,7 +42,7 @@ export default function FlaskApiPage() {
 	return (
 		<Layout>
 			<Head>
-				<title>Flask API Playground | My Fullstack App</title>
+				<title>Text & Number Utilities | FlexAPI Studio</title>
 				<meta
 					name="description"
 					content="Try out 5 different Flask API endpoints: word count, number addition, string reversal, temperature conversion, and palindrome check."
@@ -50,7 +51,7 @@ export default function FlaskApiPage() {
 			<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
 				<div className="max-w-2xl w-full">
 					<h2 className="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-400 text-center">
-						Flask API Playground
+						Text & Number Utilities
 					</h2>
 					<p className="mb-6 text-gray-700 dark:text-gray-200 text-center">
 						Interact with 5 different Flask API endpoints: word count, number
@@ -84,6 +85,7 @@ export default function FlaskApiPage() {
 					<ApiForm />
 				</div>
 			</div>
+			<Footer />
 		</Layout>
 	);
 }

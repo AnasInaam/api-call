@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Layout from "../components/Layout";
 import PredictionDocs from "../components/PredictionDocs";
+import Footer from "../components/Footer";
 const HousePriceForm = dynamic(() => import("../components/HousePriceForm"), { ssr: false });
 
 export default function HousePricePage() {
@@ -21,6 +22,7 @@ export default function HousePricePage() {
           <HousePriceForm />
         </div>
       </div>
+      <Footer />
     </Layout>
   );
 }

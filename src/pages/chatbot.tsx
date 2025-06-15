@@ -7,6 +7,7 @@ import ModelInfoCard from "../components/ModelInfoCard";
 import Footer from "../components/Footer";
 import ThemeToggle from "../components/ThemeToggle";
 import CopyButton from "../components/CopyButton";
+import Layout from "../components/Layout";
 
 const MarkdownMessage = dynamic(() => import("../components/MarkdownMessage"), { ssr: false });
 
@@ -56,7 +57,9 @@ export default function ChatbotPage() {
 
   // Scroll to bottom on new message
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 0) {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, loading, typing]);
 
   const handleSend = async () => {
@@ -110,19 +113,7 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
-      {/* Header */}
-      <header className="w-full flex flex-col items-center justify-center py-5 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-gray-900 dark:to-gray-800 shadow rounded-b-2xl relative">
-        <div className="flex items-center gap-3 justify-center">
-          <Sparkles className="w-8 h-8 text-white drop-shadow" />
-          <span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow">
-            OpenRouter Chatbot Playground
-          </span>
-        </div>
-        <div className="absolute right-6 top-1/2 -translate-y-1/2">
-          <ThemeToggle />
-        </div>
-      </header>
+    <Layout>
       {/* Main Content */}
       <main className="flex-1 w-full max-w-3xl mx-auto px-2 md:px-0 py-8">
         <Tab.Group>
@@ -381,6 +372,6 @@ export default function ChatbotPage() {
       </main>
       {/* Footer */}
       <Footer />
-    </div>
+    </Layout>
   );
 }
