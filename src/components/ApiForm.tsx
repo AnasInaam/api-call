@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 const API_BASE_URL = 'https://my-flask-api-ayiq.onrender.com';
 
@@ -19,6 +20,7 @@ const ApiForm: React.FC = () => {
 
     const handleApiCall = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (loading) return; // Prevent double submit
         setLoading(true);
         setResult(null);
         let endpoint = '';
@@ -54,8 +56,10 @@ const ApiForm: React.FC = () => {
             });
             const data = await response.json();
             setResult(data.result);
+            toast.success('API call successful!', { id: 'api-success', description: `Result: ${data.result}` });
         } catch (err) {
             setResult('Error fetching result');
+            toast.error('API call failed', { id: 'api-error', description: 'Error fetching result' });
         } finally {
             setLoading(false);
         }
@@ -76,22 +80,23 @@ const ApiForm: React.FC = () => {
                     value={inputData}
                     onChange={(e) => setInputData(e.target.value)}
                     placeholder={placeholders[apiType]}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-gray-100 placeholder-black dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-800 text-black dark:text-gray-100 placeholder-black dark:placeholder-gray-500"
+                    required
+                    disabled={loading}
                 />
-                <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700" disabled={loading}>
-                  {loading ? 'Loading...' : 'Submit'}
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-60 disabled:cursor-not-allowed"
+                    disabled={loading}
+                >
+                    {loading ? 'Loading...' : 'Submit'}
                 </button>
             </form>
-            {loading && (
-                <div className="flex justify-center items-center mt-4">
-                  <svg className="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                  </svg>
-                  <span className="ml-2 text-blue-600">Loading...</span>
+            {result && (
+                <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded text-gray-800 dark:text-gray-100">
+                    <strong>Result:</strong> {result}
                 </div>
             )}
-            {result && !loading && <div className="mt-4 p-2 bg-gray-100 dark:bg-gray-800 rounded text-gray-900 dark:text-gray-100">Result: {result}</div>}
         </div>
     );
 };

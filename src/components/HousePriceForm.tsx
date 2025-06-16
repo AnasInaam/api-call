@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "../components/ui/card";
 import { Sparkles } from "lucide-react";
+import { toast } from "sonner";
 
 const API_URL = "https://house-price-api-0k5l.onrender.com/predict";
 
@@ -35,6 +36,7 @@ export default function HousePriceForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return; // Prevent double submit
     setLoading(true);
     setResult(null);
     setError(null);
@@ -47,8 +49,10 @@ export default function HousePriceForm() {
       if (!res.ok) throw new Error("Prediction failed");
       const data = await res.json();
       setResult(`Predicted Price: $${data.price.toLocaleString()}`);
+      toast.success('Prediction successful!', { id: 'predict-success', description: `Predicted Price: $${data.price.toLocaleString()}` });
     } catch (err: any) {
       setError(err.message || "Error occurred");
+      toast.error('Prediction failed', { id: 'predict-error', description: err.message || 'Error occurred' });
     } finally {
       setLoading(false);
     }
@@ -74,18 +78,17 @@ export default function HousePriceForm() {
               onChange={handleChange}
               className="rounded border px-2 py-1 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-400"
               required
+              disabled={loading}
             />
           </div>
         ))}
-        <div className="col-span-2 flex justify-end mt-4">
-          <button
-            type="submit"
-            className="px-6 py-2 rounded-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold shadow-lg hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
-            disabled={loading}
-          >
-            {loading ? "Predicting..." : "Predict Price"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={loading}
+        >
+          {loading ? "Predicting..." : "Predict"}
+        </button>
       </form>
       {result && <div className="mt-4 text-green-600 font-semibold">{result}</div>}
       {error && <div className="mt-4 text-red-600 font-semibold">{error}</div>}
